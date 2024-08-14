@@ -8,6 +8,12 @@ const {
   deleteOneAnime,
 } = require("../queries/animes");
 
+const {
+  checkName,
+  checkDescription
+} = require('../validations/checkAnime');
+
+
 /* Instructions: Use the following prompts to write the corresponding routes. **Each** route should be able to catch server-side and user input errors(should they apply). Consult the test files to see how the routes and errors should work.*/
 
 
@@ -54,7 +60,7 @@ animes.get('/:id', async (req, res) => {
 //   "description": "this is anime"
 // }
 
-animes.post('/', async (req, res) => {
+animes.post('/', checkName, checkDescription, async (req, res) => {
   try{
     const body = req.body;
     const newAnime = await createOneAnime(body.name, body.description);
@@ -76,7 +82,7 @@ animes.post('/', async (req, res) => {
 //   "description": "this is anime as well"
 // }
 
-animes.put('/:id', async (req, res) => {
+animes.put('/:id', checkName, checkDescription, async (req, res) => {
   const { id } = req.params;
   const body = req.body;
 
@@ -101,7 +107,7 @@ animes.delete('/:id', async (req, res) => {
   const deletedAnime = await deleteOneAnime(id);
 
   if(deletedAnime) {
-    res.status(200).json(deletedAnime)
+    res.status(200).json(deletedAnime);
   } else {
     res.status(404).json({ error: "Anime not found"})
   }
