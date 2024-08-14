@@ -50,5 +50,12 @@ body {
   flex-direction: row;
 }
 
+.index {
+  border-left: 10px solid black;
+  border-bottom: 10px solid black;
+  margin-left: 10px;
+  background-color: rgb(246, 240, 233);
+}
+
 
 
